@@ -11,7 +11,10 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.chatapp_kotlin.databinding.ActivityFriendsBinding
+import com.google.android.material.behavior.SwipeDismissBehavior
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -21,10 +24,12 @@ class FriendsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFriendsBinding
     lateinit var recyclerView: RecyclerView
-    lateinit var users: List<User>
+    lateinit var users: ArrayList<User>
     lateinit var userAdapter: UserAdapter
     lateinit var progressBar: ProgressBar
+    lateinit var swipeRefreshLayout:SwipeRefreshLayout
     lateinit var onItemClickListener: UserAdapter.OnItemClickListener
+    lateinit var myImageUri:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +38,25 @@ class FriendsActivity : AppCompatActivity() {
         setContentView(view)
         progressBar = binding.progressBar
         recyclerView = binding.recyclerView
-        users = mutableListOf()
+        swipeRefreshLayout=binding.swipeLayout
+              users= ArrayList()
+
+        swipeRefreshLayout.setOnRefreshListener { getUsers()
+           swipeRefreshLayout.isRefreshing=false
+        }
 
         onItemClickListener = object : UserAdapter.OnItemClickListener {
 
             override fun onItemClick(position: Int) {
+
+                Intent(this@FriendsActivity,MessageActivity::class.java).apply {
+                    putExtra("roommate_userName",users[position].userName)
+                    putExtra("roommate_email",users[position].email)
+                    putExtra("roommate_img",users[position].profile_image)
+                    putExtra("my_img",myImageUri)
+
+                    startActivity(this)
+                }
                 Toast.makeText(
                     this@FriendsActivity,
                     "tapped on ${users[position].userName}",
@@ -51,6 +70,7 @@ class FriendsActivity : AppCompatActivity() {
     }
 
     private fun getUsers() {
+        users.clear()
         FirebaseDatabase.getInstance().getReference("users").addListenerForSingleValueEvent(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -61,6 +81,12 @@ class FriendsActivity : AppCompatActivity() {
                     recyclerView.adapter = userAdapter
                     progressBar.visibility = View.GONE
                     recyclerView.visibility = View.VISIBLE
+                }
+                for(user in users){
+                    if(user.email== FirebaseAuth.getInstance().currentUser?.email){
+                        myImageUri= user.profile_image!!
+                        return
+                    }
                 }
             }
 
