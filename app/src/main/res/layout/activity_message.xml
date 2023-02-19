@@ -10,7 +10,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="55dp"
-        android:background="@drawable/gradient"
+        android:background="@drawable/gradient_pink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,56 +24,65 @@
             <ImageView
                 android:id="@+id/imageToolBar"
                 android:layout_width="match_parent"
-                android:src="@drawable/account_person"
                 android:layout_height="match_parent"
                 android:onClick="backToMain"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/account_person" />
         </androidx.cardview.widget.CardView>
+
         <TextView
             android:id="@+id/tvChatWith"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp" />
 
 
     </LinearLayout>
+
     <ProgressBar
         android:id="@+id/progressMessage"
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/linearLayout"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/linearLayout" />
 
-   <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/recyclerViewMessage"
-       android:layout_width="match_parent"
-       android:visibility="gone"
-       app:layout_constraintTop_toBottomOf="@id/linearLayout"
-       app:layout_constraintBottom_toTopOf="@id/etMessage"
-       android:layout_height="0dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMessage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/etMessage"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout" />
+
     <EditText
+        android:id="@+id/etMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_field"
-        android:minHeight="45dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/edit_text_message"
         android:maxHeight="100dp"
-        android:id="@+id/etMessage"
-        android:paddingVertical="10dp"
-        android:layout_marginBottom="10dp"
+        android:minHeight="45dp"
+        android:padding="8dp"
         android:paddingHorizontal="20dp"
-        app:layout_constraintStart_toStartOf="parent"
+
+        android:paddingVertical="10dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/ivSend"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-<ImageView
-    android:id="@+id/ivSend"
-    android:layout_width="40dp"
-    android:src="@drawable/send"
-    android:layout_marginBottom="10dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:layout_height="40dp"/>
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/ivSend"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
