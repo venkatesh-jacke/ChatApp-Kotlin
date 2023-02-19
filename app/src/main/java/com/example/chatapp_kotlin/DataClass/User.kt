@@ -1,4 +1,4 @@
-package com.example.chatapp_kotlin
+package com.example.chatapp_kotlin.DataClass
 
 //data class User(val userName:String,val email:String,val profile_image:String)
 

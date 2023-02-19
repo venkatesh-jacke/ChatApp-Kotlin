@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
 
     android:background="@drawable/gradient"
-    tools:context=".SignUpActivity">
+    tools:context=".Activities.SignUpActivity">
 
     <EditText
         android:id="@+id/etUserName"

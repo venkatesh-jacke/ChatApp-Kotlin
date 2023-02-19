@@ -1,7 +1,8 @@
-package com.example.chatapp_kotlin
+package com.example.chatapp_kotlin.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.chatapp_kotlin.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

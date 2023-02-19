@@ -1,4 +1,4 @@
-package com.example.chatapp_kotlin
+package com.example.chatapp_kotlin.Adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.chatapp_kotlin.DataClass.Message
+import com.example.chatapp_kotlin.R
 import com.google.firebase.auth.FirebaseAuth
 
 class MessageAdapter(
@@ -33,23 +35,8 @@ class MessageAdapter(
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
        holder.tvMessage.text=messages[position].context
         var cl=holder.cl
+        //if
         if(messages[position].sender== FirebaseAuth.getInstance().currentUser?.email){
-
-            Glide.with(context)
-                .load(senderImg)
-                .error(R.drawable.account_person)
-                .placeholder(R.drawable.account_person)
-                .into(holder.ivProfile)
-            var constraintSet=ConstraintSet()
-            constraintSet.clone(cl)
-            constraintSet.clear(R.id.cvProfile,ConstraintSet.LEFT)
-            constraintSet.clear(R.id.tvMessage,ConstraintSet.LEFT)
-            constraintSet.connect(R.id.cvProfile,ConstraintSet.RIGHT,R.id.ccLayout,ConstraintSet.RIGHT,0)
-            constraintSet.connect(R.id.tvMessage,ConstraintSet.RIGHT,R.id.cvProfile,ConstraintSet.LEFT,0)
-            constraintSet.applyTo(cl)
-
-        }
-        else{
 
             Glide.with(context)
                 .load(recieverImg)
@@ -58,10 +45,34 @@ class MessageAdapter(
                 .into(holder.ivProfile)
             var constraintSet=ConstraintSet()
             constraintSet.clone(cl)
+            constraintSet.clear(R.id.cvProfile,ConstraintSet.LEFT)
+            constraintSet.clear(R.id.tvMessage,ConstraintSet.LEFT)
+            constraintSet.connect(
+                R.id.cvProfile,ConstraintSet.RIGHT,
+                R.id.ccLayout,ConstraintSet.RIGHT,0)
+            constraintSet.connect(
+                R.id.tvMessage,ConstraintSet.RIGHT,
+                R.id.cvProfile,ConstraintSet.LEFT,0)
+            constraintSet.applyTo(cl)
+
+        }
+        else{
+
+            Glide.with(context)
+                .load(senderImg)
+                .error(R.drawable.account_person)
+                .placeholder(R.drawable.account_person)
+                .into(holder.ivProfile)
+            var constraintSet=ConstraintSet()
+            constraintSet.clone(cl)
             constraintSet.clear(R.id.cvProfile,ConstraintSet.RIGHT)
             constraintSet.clear(R.id.tvMessage,ConstraintSet.RIGHT)
-            constraintSet.connect(R.id.cvProfile,ConstraintSet.LEFT,R.id.ccLayout,ConstraintSet.LEFT,0)
-            constraintSet.connect(R.id.tvMessage,ConstraintSet.LEFT,R.id.cvProfile,ConstraintSet.RIGHT,0)
+            constraintSet.connect(
+                R.id.cvProfile,ConstraintSet.LEFT,
+                R.id.ccLayout,ConstraintSet.LEFT,0)
+            constraintSet.connect(
+                R.id.tvMessage,ConstraintSet.LEFT,
+                R.id.cvProfile,ConstraintSet.RIGHT,0)
             constraintSet.applyTo(cl)
         }
     }

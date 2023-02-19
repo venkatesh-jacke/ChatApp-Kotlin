@@ -1,4 +1,4 @@
-package com.example.chatapp_kotlin
+package com.example.chatapp_kotlin.Activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.example.chatapp_kotlin.DataClass.User
 import com.example.chatapp_kotlin.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -25,6 +26,10 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var tvLogin: TextView
     private var isSigningUp = true
 
+    //Firebase
+    lateinit var mAuth: FirebaseAuth
+    lateinit var mDatabase: FirebaseDatabase
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +42,9 @@ class SignUpActivity : AppCompatActivity() {
         etPassword = binding.etPassword
         btnSubmit = binding.btnSubmit
         tvLogin = binding.tvLogin
-
-        val currentUser = FirebaseAuth.getInstance().currentUser
+        mAuth=FirebaseAuth.getInstance()
+        mDatabase= FirebaseDatabase.getInstance()
+        val currentUser = mAuth.currentUser
         // If user is already logged in, redirect to FriendsActivity
         if(currentUser != null){
             startActivity(Intent(this, FriendsActivity::class.java))
@@ -78,22 +84,30 @@ class SignUpActivity : AppCompatActivity() {
     fun isValid(username: String?, email: String, password: String): Boolean {
         var isValid = true
 
-        if (username != null) {
-            if (!username.matches(Regex("^[a-zA-Z0-9]+$"))) {
-                etUserName.error = "Username can only contain letters and numbers"
-                isValid = false
-            }
-        }
+//        if (username != null) {
+//            if (!username.matches(Regex("^[a-zA-Z0-9]+$"))) {
+//                etUserName.error = "Username can only contain letters and numbers"
+//                isValid = false
+//            }
+//        }
+          if(username==null){
+              etUserName.error="UserName cannot be empty"
+                isValid=false
+          }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.error = "Invalid email address"
             isValid = false
         }
 
-        if (!password.matches(Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"))) {
-            etPassword.error = "Password must contain at least 8 characters including 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character"
-            isValid = false
-        }
+//        if (!password.matches(Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"))) {
+//            etPassword.error = "Password must contain at least 8 characters including 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character"
+//            isValid = false
+//        }
+          if(password.length<5){
+              etPassword.error="Password must be at least 6 characters"
+              isValid=false
+          }
 
         return isValid
     }
@@ -101,13 +115,15 @@ class SignUpActivity : AppCompatActivity() {
     // Function to create a new user
         private fun signUp() {
 
-            FirebaseAuth.getInstance()
+            mAuth
                 .createUserWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString())
                 .addOnCompleteListener {
 
                     if (it.isSuccessful) {
                         // Add user to database
-                        FirebaseDatabase.getInstance().getReference("users/"+FirebaseAuth.getInstance().uid).setValue(User(etUserName.text.toString(),etEmail.text.toString(),""))
+                        mDatabase.getReference("users/"+mAuth.uid).setValue(
+                            User(etUserName.text.toString(),etEmail.text.toString(),"")
+                        )
 
                         // Redirect to FriendsActivity
                         Intent(this, FriendsActivity::class.java).also {
@@ -129,7 +145,7 @@ class SignUpActivity : AppCompatActivity() {
   // Function to log in an existing user
         private fun logIn() {
 
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(
+            mAuth.signInWithEmailAndPassword(
                 binding.etEmail.text.toString(),
                 binding.etPassword.text.toString()
             )

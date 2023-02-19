@@ -1,4 +1,4 @@
-package com.example.chatapp_kotlin
+package com.example.chatapp_kotlin.DataClass
 
 class Message {
 

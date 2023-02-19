@@ -1,4 +1,4 @@
-package com.example.chatapp_kotlin
+package com.example.chatapp_kotlin.Adapters
 
 import android.content.Context
 import android.view.View
@@ -7,8 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.chatapp_kotlin.R
+import com.example.chatapp_kotlin.DataClass.User
 
-class UserAdapter(var users:List<User>,var context:Context,var onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+class UserAdapter(var users:List<User>, var context:Context, var onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
 
     interface OnItemClickListener {

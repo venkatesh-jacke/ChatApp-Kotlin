@@ -1,4 +1,4 @@
-package com.example.chatapp_kotlin
+package com.example.chatapp_kotlin.Activities
 
 import android.content.Intent
 import android.net.Uri
@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.MultiAutoCompleteTextView
 import android.widget.Toast
 import com.example.chatapp_kotlin.databinding.ActivityProfileBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +22,10 @@ class ProfileActivity : AppCompatActivity() {
     lateinit var profileImage: ImageView
     private lateinit var selectedImageUri: Uri
 
+    //Firebase
+    lateinit var mAuth: FirebaseAuth
+    lateinit var mDatabase: FirebaseDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
@@ -30,9 +35,10 @@ class ProfileActivity : AppCompatActivity() {
         btnLogOut = binding.btnLogOut
         profileImage = binding.profileImage
         btnUpload = binding.btnUpload
-
+        mAuth=FirebaseAuth.getInstance()
+        mDatabase= FirebaseDatabase.getInstance()
         btnLogOut.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
+            mAuth.signOut()
             Intent(this, SignUpActivity::class.java).also {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
@@ -84,8 +90,8 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun updateProfilePhoto(url: String) {
-        val uid= FirebaseAuth.getInstance().uid
-        val ref= FirebaseDatabase.getInstance().getReference("/users/$uid")
+        val uid= mAuth.uid
+        val ref= mDatabase.getReference("/users/$uid")
         ref.child("profile_image").setValue(url)
 
 
