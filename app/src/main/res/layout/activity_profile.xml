@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.ProfileActivity">
+    <include layout="@layout/toolbar" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="180dp"

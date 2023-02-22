@@ -6,15 +6,21 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
+
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.bumptech.glide.Glide
 import com.example.chatapp_kotlin.Adapters.UserAdapter
 import com.example.chatapp_kotlin.R
 import com.example.chatapp_kotlin.DataClass.User
 import com.example.chatapp_kotlin.databinding.ActivityFriendsBinding
+import com.example.chatapp_kotlin.databinding.ToolbarBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,6 +30,8 @@ import com.google.firebase.database.ValueEventListener
 class FriendsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFriendsBinding
+    private lateinit var toolBar: Toolbar
+    private var menuItem:Menu?=null
     lateinit var recyclerView: RecyclerView
     lateinit var users: ArrayList<User>
     lateinit var userAdapter: UserAdapter
@@ -44,12 +52,19 @@ class FriendsActivity : AppCompatActivity() {
         setContentView(view)
 
         //Firebase
-        mAuth=FirebaseAuth.getInstance()
-        mDatabase= FirebaseDatabase.getInstance()
+        mAuth = FirebaseAuth.getInstance()
+        mDatabase = FirebaseDatabase.getInstance()
 
         progressBar = binding.progressBar
         recyclerView = binding.recyclerView
         swipeRefreshLayout = binding.swipeLayout
+
+
+        toolBar = findViewById(R.id.toolbar)
+        toolBar.title = "Chat With Friends"
+
+        setSupportActionBar(toolBar)
+
 
 
         users = ArrayList()
@@ -78,6 +93,7 @@ class FriendsActivity : AppCompatActivity() {
 
             }
         }
+
         getUsers()
 
     }
@@ -110,15 +126,45 @@ class FriendsActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        this.menuItem=menu
         menuInflater.inflate(R.menu.menu, menu)
+
+        // Find the menu item view
+        val menuItemView = menuItem?.findItem(R.id.profile)?.actionView
+
+        // Find the menu item icon view inside the menu item view
+        val menuItemIcon = menuItemView?.findViewById<ImageView>(R.id.menu_item_icon)
+
+        // Set click listener to the menu item icon view
+
+        val uid= mAuth.uid
+        val ref= mDatabase.getReference("/users/$uid")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                if (user != null) {
+                    if (user.profile_image != "") {
+                        Glide.with(this@FriendsActivity).load(user.profile_image).into(menuItemIcon!!)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@FriendsActivity, "Error", Toast.LENGTH_SHORT).show()
+            }
+        })
+        menuItemIcon?.setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
+
         return true
     }
 
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.profile) {
-            startActivity(Intent(this, ProfileActivity::class.java))
-        }
-        return super.onOptionsItemSelected(item)
+
+        return true
     }
 
 

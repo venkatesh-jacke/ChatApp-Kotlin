@@ -9,8 +9,10 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.MultiAutoCompleteTextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.example.chatapp_kotlin.DataClass.User
+import com.example.chatapp_kotlin.R
 import com.example.chatapp_kotlin.databinding.ActivityProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -22,6 +24,7 @@ import java.util.UUID
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+    private lateinit var toolBar: Toolbar
     lateinit var btnLogOut: Button
     lateinit var btnUpload: Button
     lateinit var profileImage: ImageView
@@ -40,6 +43,12 @@ class ProfileActivity : AppCompatActivity() {
         btnLogOut = binding.btnLogOut
         profileImage = binding.profileImage
         btnUpload = binding.btnUpload
+        toolBar = findViewById(R.id.toolbar)
+        toolBar.title="Profile Settings"
+
+        setSupportActionBar(toolBar)
+
+
         mAuth=FirebaseAuth.getInstance()
         mDatabase= FirebaseDatabase.getInstance()
         btnLogOut.setOnClickListener {
