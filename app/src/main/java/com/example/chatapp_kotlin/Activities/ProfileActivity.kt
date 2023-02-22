@@ -9,9 +9,14 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.MultiAutoCompleteTextView
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.example.chatapp_kotlin.DataClass.User
 import com.example.chatapp_kotlin.databinding.ActivityProfileBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.util.UUID
 
@@ -103,5 +108,25 @@ class ProfileActivity : AppCompatActivity() {
             selectedImageUri = data.data!!
             profileImage.setImageURI(selectedImageUri)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val uid= mAuth.uid
+        val ref= mDatabase.getReference("/users/$uid")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                if (user != null) {
+                    if (user.profile_image != "") {
+                        Glide.with(this@ProfileActivity).load(user.profile_image).into(profileImage)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@ProfileActivity, "Error", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
