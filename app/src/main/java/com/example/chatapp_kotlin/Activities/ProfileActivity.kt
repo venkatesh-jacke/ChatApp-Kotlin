@@ -43,14 +43,15 @@ class ProfileActivity : AppCompatActivity() {
         btnLogOut = binding.btnLogOut
         profileImage = binding.profileImage
         btnUpload = binding.btnUpload
+
         toolBar = findViewById(R.id.toolbar)
         toolBar.title="Profile Settings"
-
         setSupportActionBar(toolBar)
 
 
         mAuth=FirebaseAuth.getInstance()
         mDatabase= FirebaseDatabase.getInstance()
+
         btnLogOut.setOnClickListener {
             mAuth.signOut()
             Intent(this, SignUpActivity::class.java).also {
@@ -62,6 +63,11 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         btnUpload.setOnClickListener {
+            if(!::selectedImageUri.isInitialized)
+            {
+                return@setOnClickListener
+            }
+
             upLoadPhoto()
         }
 
