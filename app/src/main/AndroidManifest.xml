@@ -25,6 +25,7 @@
             android:exported="false" />
         <activity
             android:name=".Activities.FriendsActivity"
+            android:theme="@style/NoToolBar"
             android:exported="false" />
         <activity
             android:name=".Activities.SignUpActivity"
