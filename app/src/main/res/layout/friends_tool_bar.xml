@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/friends_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="#0084ff"
+    app:contentInsetEnd="0dp"
+    app:contentInsetStart="0dp">
+
+    <!-- Text View on the Left -->
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        android:layout_gravity="start"
+        android:layout_marginStart="16dp"
+        android:gravity="center_vertical" />
+
+    <ImageView
+        android:scaleType="centerCrop"
+        android:id="@+id/myPic"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FF000000"
+        android:src="@drawable/account_person"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        />
+
+
+</androidx.appcompat.widget.Toolbar>
