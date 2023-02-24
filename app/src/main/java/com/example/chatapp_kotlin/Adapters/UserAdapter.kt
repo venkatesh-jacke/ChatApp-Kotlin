@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.chatapp_kotlin.R
 import com.example.chatapp_kotlin.DataClass.User
+import com.example.chatapp_kotlin.Utils.FirebaseUtils
 
 class UserAdapter(var users:List<User>, var context:Context, var onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
@@ -29,11 +30,7 @@ class UserAdapter(var users:List<User>, var context:Context, var onItemClickList
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.userName.text = users[position].userName
-        Glide.with(context)
-            .load(users[position].profile_image)
-            .error(R.drawable.account_person)
-            .placeholder(R.drawable.account_person)
-            .into(holder.profile_image)
+        FirebaseUtils.loadChatImage(context,users[position].profile_image!!,holder.profile_image)
     }
 
 

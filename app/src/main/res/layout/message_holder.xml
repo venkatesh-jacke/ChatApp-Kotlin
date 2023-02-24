@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:background="@drawable/edit_text_field"
+            android:background="@drawable/message_view"
             android:maxWidth="200dp"
             android:padding="8dp"
             tools:text="Hello World!" />

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/chat_toolbar"
     android:layout_gravity="left"
-    android:background="#E91E63"
+    android:background="#0084ff"
     android:layout_height="wrap_content">
 
 
