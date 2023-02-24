@@ -20,7 +20,7 @@
         android:layout_marginStart="16dp"
         android:gravity="center_vertical" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:scaleType="centerCrop"
         android:id="@+id/myPic"
         android:layout_width="48dp"

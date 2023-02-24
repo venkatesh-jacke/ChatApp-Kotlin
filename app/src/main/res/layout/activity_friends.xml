@@ -13,7 +13,7 @@
 
         android:layout_height="match_parent">
 
-        <include layout="@layout/friends_tool_bar" />
+        <include layout="@layout/friends_tool_bar" android:id="@+id/friendBar" />
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@id/friendBar"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="?attr/actionBarSize"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
