@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/toolbar"
-    android:background="#25D366"
+    android:background="#0084ff"
     android:layout_height="wrap_content">
 
 </androidx.appcompat.widget.Toolbar>
