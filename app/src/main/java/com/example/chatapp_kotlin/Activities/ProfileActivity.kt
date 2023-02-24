@@ -1,22 +1,31 @@
 package com.example.chatapp_kotlin.Activities
 
+
+
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.MultiAutoCompleteTextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.example.chatapp_kotlin.DataClass.User
+import com.example.chatapp_kotlin.Utils.FirebaseUtils
 import com.example.chatapp_kotlin.databinding.ActivityProfileBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import java.util.UUID
+import java.util.*
+
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+
     lateinit var btnLogOut: Button
     lateinit var btnUpload: Button
     lateinit var profileImage: ImageView
@@ -48,6 +57,11 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         btnUpload.setOnClickListener {
+            if(!::selectedImageUri.isInitialized)
+            {
+                return@setOnClickListener
+            }
+
             upLoadPhoto()
         }
 
@@ -69,7 +83,8 @@ class ProfileActivity : AppCompatActivity() {
                 if (it.isSuccessful) {
                     it.result.storage.downloadUrl.addOnCompleteListener{
                         if(it.isSuccessful){
-                            updateProfilePhoto(it.result.toString())
+                           // updateProfilePhoto(it.result.toString())
+                            FirebaseUtils().updateProfilePhoto(it.result.toString())
                         }
                     }
                     Toast.makeText(this, "Profile Uploaded", Toast.LENGTH_SHORT).show()
@@ -89,19 +104,18 @@ class ProfileActivity : AppCompatActivity() {
             }
     }
 
-    private fun updateProfilePhoto(url: String) {
-        val uid= mAuth.uid
-        val ref= mDatabase.getReference("/users/$uid")
-        ref.child("profile_image").setValue(url)
-
-
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
             selectedImageUri = data.data!!
+            FirebaseUtils().updateProfilePhoto(selectedImageUri.toString())
             profileImage.setImageURI(selectedImageUri)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        FirebaseUtils().loadUserData(this,profileImage)
     }
 }
