@@ -4,10 +4,8 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -24,12 +22,13 @@ import com.google.firebase.database.ValueEventListener
 
 class MessageActivity : AppCompatActivity() {
     lateinit var binding: ActivityMessageBinding
+    private lateinit var toolBar: Toolbar
+    private lateinit var chat_profile: ImageView
+    private lateinit var chat_name:TextView
     lateinit var recyclerView: RecyclerView
     lateinit var etMessage: EditText
     lateinit var ivSend: ImageView
     lateinit var progressMessage: ProgressBar
-    lateinit var tvChatName: TextView
-    lateinit var imgChat: ImageView
     lateinit var messages: ArrayList<Message>
     lateinit var messageAdapter: MessageAdapter
 
@@ -53,14 +52,21 @@ class MessageActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         mDatabase = FirebaseDatabase.getInstance()
 
+
+        toolBar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolBar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         recyclerView = binding.recyclerViewMessage
         etMessage = binding.etMessage
         ivSend = binding.ivSend
-        imgChat = binding.imageToolBar
-        progressMessage = binding.progressMessage
-        tvChatName = binding.tvChatWith
+        chat_profile=toolBar.findViewById(R.id.chat_profile)
+        chat_name=toolBar.findViewById(R.id.chat_name)
 
-        tvChatName.text = roommate_userName
+
+        progressMessage = binding.progressMessage
+
+
         messages = ArrayList()
 
         messageAdapter = MessageAdapter(
@@ -90,7 +96,9 @@ class MessageActivity : AppCompatActivity() {
             .load(intent.extras?.getString("roommate_img").toString())
             .error(R.drawable.account_person)
             .placeholder(R.drawable.account_person)
-            .into(imgChat)
+            .into(chat_profile)
+
+        chat_name.text=intent.extras?.getString("roommate_userName").toString()
         setupChatRoom()
 
     }
