@@ -16,19 +16,22 @@
         android:theme="@style/Theme.ChatAppKotlin"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.SignUpActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.MessageActivity"
             android:exported="false"
-            android:theme="@style/NoToolBar"
-            />
+            android:theme="@style/NoToolBar" />
         <activity
             android:name=".Activities.ProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/NoToolBar" />
         <activity
             android:name=".Activities.FriendsActivity"
-            android:theme="@style/NoToolBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/NoToolBar" />
         <activity
-            android:name=".Activities.SignUpActivity"
+            android:name=".Activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
