@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/chat_toolbar"
+    android:layout_gravity="left"
+    android:background="#833AB4"
+    android:layout_height="wrap_content">
+
+
+
+<!--    <de.hdodenhof.circleimageview.CircleImageView-->
+<!--        android:layout_width="48dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        app:civ_border_width="2dp"-->
+<!--        app:civ_border_color="#FF000000"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:id="@+id/chat_profile"/>-->
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profile Settings"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/chat_name"/>
+
+</androidx.appcompat.widget.Toolbar>
