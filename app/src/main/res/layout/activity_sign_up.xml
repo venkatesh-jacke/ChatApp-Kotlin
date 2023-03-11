@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="@drawable/gradient"
+    android:background="#833AB4"
     tools:context=".Activities.SignUpActivity">
 
     <EditText
@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="Sign Up"
-        android:background="@drawable/edit_text_field"
+        android:background="@drawable/button_bg"
         android:textColor="#F9F9FF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
