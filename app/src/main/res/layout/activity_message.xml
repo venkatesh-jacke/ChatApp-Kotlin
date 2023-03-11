@@ -96,6 +96,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/chat_wallpaper"
     tools:context=".Activities.MessageActivity">
 
     <include layout="@layout/chat_tool_bar" android:id="@+id/toolbar" />
