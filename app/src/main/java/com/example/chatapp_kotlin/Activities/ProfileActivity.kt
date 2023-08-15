@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +31,8 @@ class ProfileActivity : AppCompatActivity() {
     lateinit var btnUpload: Button
     lateinit var profileImage: ImageView
     private lateinit var selectedImageUri: Uri
+    private lateinit var etName:EditText
+    private lateinit var btnSaveName:Button
 
     //Firebase
     lateinit var mAuth: FirebaseAuth
@@ -44,6 +47,8 @@ class ProfileActivity : AppCompatActivity() {
         btnLogOut = binding.btnLogOut
         profileImage = binding.profileImage
         btnUpload = binding.btnUpload
+        etName=binding.etName
+        btnSaveName=binding.btnSaveName
         mAuth=FirebaseAuth.getInstance()
         mDatabase= FirebaseDatabase.getInstance()
         btnLogOut.setOnClickListener {
@@ -70,6 +75,11 @@ class ProfileActivity : AppCompatActivity() {
                 it.type = "image/*"
                 startActivityForResult(it, 1)
             }
+        }
+        etName.setText(FirebaseUtils().getUserName())
+
+        btnSaveName.setOnClickListener {
+            FirebaseUtils().updateProfileName(etName.text.toString())
         }
 
     }

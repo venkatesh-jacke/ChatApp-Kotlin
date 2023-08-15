@@ -54,7 +54,7 @@ class FriendsActivity : AppCompatActivity() {
 
         toolBar = findViewById(R.id.friendBar)
         myPic = findViewById(R.id.myPic)
-        toolBar.title = "Friends"
+
 
         setSupportActionBar(toolBar)
 
@@ -121,7 +121,7 @@ class FriendsActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+             
             }
         })
     }

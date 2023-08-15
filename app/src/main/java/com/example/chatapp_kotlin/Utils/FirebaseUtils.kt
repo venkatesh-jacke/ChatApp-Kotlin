@@ -15,10 +15,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
+
 class FirebaseUtils {
 
-    private val mAuth= FirebaseAuth.getInstance()
-    private val ref= FirebaseDatabase.getInstance().getReference("/users/${mAuth.uid}")
+    private val mAuth = FirebaseAuth.getInstance()
+    private val ref = FirebaseDatabase.getInstance().getReference("/users/${mAuth.uid}")
 
 
     fun loadUserData(context: Context, profileImage: ImageView) {
@@ -50,13 +51,38 @@ class FirebaseUtils {
         ref.child("profile_image").setValue(uri)
 
     }
-    infix fun updateProfilePhoto(uri:String) {
+
+    infix fun updateProfilePhoto(uri: String) {
         ref.child("profile_image").setValue(uri)
 
     }
 
+    fun getUserName(): String {
+
+      var name=""
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                if (user != null) {
+                    name=user.userName!!
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+                Log.e("TAG", "onCancelled: ", error.toException())
+            }
+        })
+        return name
+
+    }
+
+    fun updateProfileName(name: String) {
+        ref.child("userName").setValue(name)
+    }
+
     companion object {
-        fun loadChatImage(context:Context,uri: String, chatProfile: ImageView?) {
+        fun loadChatImage(context: Context, uri: String, chatProfile: ImageView?) {
             Glide.with(context)
                 .load(uri)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
