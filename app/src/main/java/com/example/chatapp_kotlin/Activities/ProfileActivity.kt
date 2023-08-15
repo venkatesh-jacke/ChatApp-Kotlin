@@ -25,8 +25,8 @@ import java.util.*
 
 
 class ProfileActivity : AppCompatActivity() {
+    private var TAG = FriendsActivity::class.java.simpleName
     private lateinit var binding: ActivityProfileBinding
-
     lateinit var btnLogOut: Button
     lateinit var btnUpload: Button
     lateinit var profileImage: ImageView
@@ -99,12 +99,12 @@ class ProfileActivity : AppCompatActivity() {
                     }
                     Toast.makeText(this, "Profile Uploaded", Toast.LENGTH_SHORT).show()
                     Log.d(
-                        "ProfileActivity",
+                        TAG,
                         "Profile Uploaded" + it.result?.metadata?.reference?.downloadUrl
                     )
                 } else {
                     Toast.makeText(this, "Profile Upload Failed", Toast.LENGTH_SHORT).show()
-                    Log.d("ProfileActivity", "Profile Upload Failed" + it.exception?.message)
+                    Log.d(TAG, "Profile Upload Failed" + it.exception?.message)
                 }
                 progressDialog.dismiss()
             }

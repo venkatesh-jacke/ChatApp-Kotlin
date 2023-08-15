@@ -3,6 +3,7 @@ package com.example.chatapp_kotlin.Activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -25,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class FriendsActivity : AppCompatActivity() {
-
+    private var TAG = FriendsActivity::class.java.simpleName
     private lateinit var binding: ActivityFriendsBinding
     lateinit var recyclerView: RecyclerView
     lateinit var users: ArrayList<User>
@@ -121,7 +122,7 @@ class FriendsActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-             
+                Log.d(TAG, error.message)
             }
         })
     }
@@ -142,6 +143,7 @@ class FriendsActivity : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(this@FriendsActivity, "Error", Toast.LENGTH_SHORT).show()
+                Log.d(TAG, error.message)
             }
         })
     }

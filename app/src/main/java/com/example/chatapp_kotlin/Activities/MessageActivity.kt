@@ -3,6 +3,7 @@ package com.example.chatapp_kotlin.Activities
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
@@ -21,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class MessageActivity : AppCompatActivity() {
+    private var TAG =MessageActivity::class.java.simpleName
     lateinit var binding: ActivityMessageBinding
     private lateinit var toolBar: Toolbar
     private lateinit var chat_profile: ImageView
@@ -121,7 +123,7 @@ class MessageActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                    Log.d(TAG,error.message)
                 }
 
             })
@@ -145,7 +147,7 @@ class MessageActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                    Log.d(TAG,error.message)
                 }
             })
     }

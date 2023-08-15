@@ -191,12 +191,12 @@ class SignUpActivity : AppCompatActivity() {
                         startActivity(it)
                     }
                     Toast.makeText(this, "SignIn Successful", Toast.LENGTH_SHORT).show()
-                    Log.d("SignUpActivity", "SignIn Successful")
+                    Log.d(TAG, "SignIn Successful")
 
                 } else {
                     Toast.makeText(this, "SignIn Failed", Toast.LENGTH_SHORT).show()
                     Log.d(
-                        "SignUpActivity",
+                        TAG,
                         "SignIn Failed due to: " + it.exception?.message.toString()
                     )
                 }

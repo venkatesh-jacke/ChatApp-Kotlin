@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.chatapp_kotlin.Activities.FriendsActivity
 import com.example.chatapp_kotlin.DataClass.User
 import com.example.chatapp_kotlin.R
 import com.google.firebase.auth.FirebaseAuth
@@ -17,7 +18,7 @@ import com.google.firebase.database.ValueEventListener
 
 
 class FirebaseUtils {
-
+    private var TAG = FirebaseUtils::class.java.simpleName
     private val mAuth = FirebaseAuth.getInstance()
     private val ref = FirebaseDatabase.getInstance().getReference("/users/${mAuth.uid}")
 
@@ -34,14 +35,14 @@ class FirebaseUtils {
                             .skipMemoryCache(true)
                             .into(profileImage)
 
-                        Log.d("TAG", "onDataChange: ${user.profile_image}")
+                        Log.d(TAG, "onDataChange: ${user.profile_image}")
                     }
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-                Log.e("TAG", "onCancelled: ", error.toException())
+                Log.e(TAG, "onCancelled: ", error.toException())
             }
         })
 
@@ -70,7 +71,7 @@ class FirebaseUtils {
 
             override fun onCancelled(error: DatabaseError) {
 
-                Log.e("TAG", "onCancelled: ", error.toException())
+                Log.e(TAG, "onCancelled: ", error.toException())
             }
         })
         return name
