@@ -127,6 +127,7 @@
         android:maxHeight="100dp"
         android:minHeight="45dp"
         android:padding="8dp"
+        android:hint="Start a new message"
         android:paddingHorizontal="20dp"
 
         android:paddingVertical="10dp"
