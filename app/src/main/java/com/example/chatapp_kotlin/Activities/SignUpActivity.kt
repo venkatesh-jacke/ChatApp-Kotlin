@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.chatapp_kotlin.Constants
 import com.example.chatapp_kotlin.DataClass.User
 import com.example.chatapp_kotlin.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -146,7 +147,7 @@ class SignUpActivity : AppCompatActivity() {
 
                     // Add user to the database
                     val user = User(etUserName.text.toString(), etEmail.text.toString(), "")
-                    val userReference = mDatabase.getReference("users").child(mAuth.uid ?: "")
+                    val userReference = mDatabase.getReference(Constants.USERS_NODE).child(mAuth.uid ?: "")
                     userReference.setValue(user)
                         .addOnCompleteListener { databaseTask ->
                             if (databaseTask.isSuccessful) {
@@ -195,10 +196,7 @@ class SignUpActivity : AppCompatActivity() {
 
                 } else {
                     Toast.makeText(this, "SignIn Failed", Toast.LENGTH_SHORT).show()
-                    Log.d(
-                        TAG,
-                        "SignIn Failed due to: " + it.exception?.message.toString()
-                    )
+                    Log.d(TAG, "SignIn Failed due to: " + it.exception?.message.toString())
                 }
             }
     }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.chatapp_kotlin.Adapters.MessageAdapter
+import com.example.chatapp_kotlin.Constants
 import com.example.chatapp_kotlin.DataClass.Message
 import com.example.chatapp_kotlin.R
 import com.example.chatapp_kotlin.DataClass.User
@@ -48,8 +49,8 @@ class MessageActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        roommate_userName = intent.getStringExtra("roommate_userName").toString()
-        roommate_email = intent.getStringExtra("roommate_email").toString()
+        roommate_userName = intent.getStringExtra(Constants.EXTRA_ROOMMATE_USERNAME).toString()
+        roommate_email = intent.getStringExtra(Constants.EXTRA_ROOMMATE_EMAIL).toString()
 
         mAuth = FirebaseAuth.getInstance()
         mDatabase = FirebaseDatabase.getInstance()
@@ -73,8 +74,8 @@ class MessageActivity : AppCompatActivity() {
 
         messageAdapter = MessageAdapter(
             messages,
-            intent.extras?.getString("roommate_img").toString(),
-            intent.extras?.getString("my_img").toString(),
+            intent.extras?.getString(Constants.EXTRA_ROOMMATE_IMG).toString(),
+            intent.extras?.getString(Constants.EXTRA_MY_IMG).toString(),
             this@MessageActivity
         )
 
@@ -95,12 +96,12 @@ class MessageActivity : AppCompatActivity() {
 
 
         Glide.with(this@MessageActivity)
-            .load(intent.extras?.getString("roommate_img").toString())
+            .load(intent.extras?.getString(Constants.EXTRA_ROOMMATE_IMG).toString())
             .error(R.drawable.account_person)
             .placeholder(R.drawable.account_person)
             .into(chat_profile)
 
-        chat_name.text=intent.extras?.getString("roommate_userName").toString()
+        chat_name.text=intent.extras?.getString(Constants.EXTRA_ROOMMATE_USERNAME).toString()
         setupChatRoom()
 
     }
@@ -114,7 +115,7 @@ class MessageActivity : AppCompatActivity() {
                     var myName = snapshot.getValue(User::class.java)?.userName
                     if (roommate_userName.compareTo(myName!!) > 0) {
                         chatRoomId = roommate_userName + myName
-                    } else if (roommate_userName.compareTo(myName!!) == 0) {
+                    } else if (roommate_userName.compareTo(myName) == 0) {
                         chatRoomId = roommate_userName + myName
                     } else {
                         chatRoomId = myName + roommate_userName

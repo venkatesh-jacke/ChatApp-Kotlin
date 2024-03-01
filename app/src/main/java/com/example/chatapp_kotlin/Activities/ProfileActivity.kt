@@ -98,10 +98,7 @@ class ProfileActivity : AppCompatActivity() {
                         }
                     }
                     Toast.makeText(this, "Profile Uploaded", Toast.LENGTH_SHORT).show()
-                    Log.d(
-                        TAG,
-                        "Profile Uploaded" + it.result?.metadata?.reference?.downloadUrl
-                    )
+                    Log.d(TAG, "Profile Uploaded" + it.result?.metadata?.reference?.downloadUrl)
                 } else {
                     Toast.makeText(this, "Profile Upload Failed", Toast.LENGTH_SHORT).show()
                     Log.d(TAG, "Profile Upload Failed" + it.exception?.message)

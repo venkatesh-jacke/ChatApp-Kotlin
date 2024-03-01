@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.example.chatapp_kotlin.Adapters.UserAdapter
+import com.example.chatapp_kotlin.Constants
 import com.example.chatapp_kotlin.R
 import com.example.chatapp_kotlin.DataClass.User
 import com.example.chatapp_kotlin.databinding.ActivityFriendsBinding
@@ -82,10 +83,10 @@ class FriendsActivity : AppCompatActivity() {
             override fun onItemClick(position: Int) {
 
                 Intent(this@FriendsActivity, MessageActivity::class.java).apply {
-                    putExtra("roommate_userName", users[position].userName)
-                    putExtra("roommate_email", users[position].email)
-                    putExtra("roommate_img", users[position].profile_image)
-                    putExtra("my_img", myImageUri)
+                    putExtra(Constants.EXTRA_ROOMMATE_USERNAME, users[position].userName)
+                    putExtra(Constants.EXTRA_ROOMMATE_EMAIL, users[position].email)
+                    putExtra(Constants.EXTRA_ROOMMATE_IMG, users[position].profile_image)
+                    putExtra(Constants.EXTRA_MY_IMG, myImageUri)
 
                     startActivity(this)
                 }
@@ -103,7 +104,7 @@ class FriendsActivity : AppCompatActivity() {
 
     private fun getUsers() {
         users.clear()
-        mDatabase.getReference("users").addListenerForSingleValueEvent(object : ValueEventListener {
+        mDatabase.getReference(Constants.USERS_NODE).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (data in snapshot.children) {
                     users += data.getValue(User::class.java)!!
